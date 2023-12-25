@@ -15,15 +15,18 @@ headers = {
 params = {
     'formatType': 'odi'
 }
+# storage key file provided by GCP used to authenticate the user to access the GCS bucket
+storage_client = storage.Client.from_service_account_json(keys["gcp_key_file"])
+
 
 def upload_to_gcs(csv_filename,bucket_name = 'bkt-ranking-data'):
     # Upload the CSV file to GCS
     #bucket_name = 'bkt-ranking-data'
-    storage_client = storage.Client()
+    #storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     destination_blob_name = f'{csv_filename}'  # The path to store in GCS
 
-    blob = bucket.blob(destination_blob_name)
+    blob = bucket.blob(destination_blob_name)# blob object to store the file in GCS
     blob.upload_from_filename(csv_filename)
 
     print(f"File {csv_filename} uploaded to GCS bucket {bucket_name} as {destination_blob_name}")
@@ -65,5 +68,8 @@ if __name__ == '__main__':
     file_mode = sys.argv[1]
     if file_mode == '1':
         response = requests.get(url, headers=headers, params=params)
-
+    elif file_mode == '2':
+        csv_filename = 'batsmen_rankings.csv'
+        upload_to_gcs(csv_filename)
+        
     
