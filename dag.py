@@ -5,9 +5,9 @@ from airflow.utils.dates import days_ago
 
 default_args = {
     'owner': 'airflow',
-    'start_date': datetime(2023, 12, 18),
+    'start_date': datetime(2023, 12, 28),
     'depends_on_past': False,
-    'email': ['vishal.bulbule@techtrapture.com'],
+    'email': ['leonasting@gmail.com'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -23,5 +23,5 @@ dag = DAG('fetch_cricket_stats',
 with dag:
     run_script_task = BashOperator(
         task_id='run_script',
-        bash_command='python /home/airflow/gcs/dags/scripts/extract_and_push_gcs.py',
+        bash_command='python /home/airflow/gcs/dags/scripts/extract_and_push_gcs_no_upload.py 1',
     )
