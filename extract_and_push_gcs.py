@@ -17,8 +17,6 @@ params = {
 }
 # storage key file provided by GCP used to authenticate the user to access the GCS bucket
 storage_client = storage.Client.from_service_account_json(keys["gcp_key_file"])
-
-
 def upload_to_gcs(csv_filename,bucket_name = 'bkt-ranking-data'):
     # Upload the CSV file to GCS
     #bucket_name = 'bkt-ranking-data'
@@ -67,7 +65,8 @@ if __name__ == '__main__':
     
     file_mode = sys.argv[1]
     if file_mode == '1':
-        response = requests.get(url, headers=headers, params=params)
+        #response = requests.get(url, headers=headers, params=params)
+        fetch_data_from_api()
     elif file_mode == '2':
         csv_filename = 'batsmen_rankings.csv'
         upload_to_gcs(csv_filename)
